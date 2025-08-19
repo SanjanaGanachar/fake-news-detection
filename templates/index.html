@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detector</title>
+    <style>
+        /* General body and container styling */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        /* Header and text styling */
+        h1 {
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        p {
+            color: #555;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        /* Form styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        textarea {
+            width: 100%;
+            height: 250px;
+            padding: 15px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            border-color: #1e3a8a;
+            outline: none;
+        }
+        button {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #fff;
+            background-color: #1e3a8a;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #1c337a;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Result display styling */
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 8px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .fake {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            border: 2px solid #b91c1c;
+        }
+        .real {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 2px solid #065f46;
+        }
+        .result h2 {
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        /* Keyframe for fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fake News Detector</h1>
+        <p>Paste a news article to determine if it is likely to be real or fake.</p>
+        
+        <form action="/predict" method="post">
+            <textarea name="news_text" placeholder="Paste your news text here...">{{ news_text }}</textarea>
+            <button type="submit">Analyze</button>
+        </form>
+
+        {% if prediction_result %}
+            <div class="result {% if prediction_result == 'Fake News' %}fake{% else %}real{% endif %}">
+                <h2>Prediction: {{ prediction_result }}</h2>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
